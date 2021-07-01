@@ -397,6 +397,10 @@ CNNNetworkNGraphImpl::reshape(const std::map<std::string, ngraph::PartialShape>&
             }
             specialized_ngraph_function->validate_nodes_and_infer_types();
         }
+        if (getenv("DUMP_CNN")) {
+            for (const auto& node : specialized_ngraph_function->get_ordered_ops())
+               std::cout << *node << std::endl;
+            }
 
 #if 0
         for (const auto &op : specialized_ngraph_function->get_ordered_ops()) {

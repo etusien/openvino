@@ -556,14 +556,18 @@ namespace ngraph
 
 std::ostream& Node::write_description(std::ostream& out, uint32_t depth) const
 {
+    std::string name;
+    if (getenv("PRINT_NAME"))
+        name = get_friendly_name();
+    
     if (depth == 0)
     {
-        out << get_friendly_name();
+        out << name;
     }
     else
     {
         out << "v" << get_type_info().version << "::" << get_type_info().name << " "
-            << get_friendly_name() << " (";
+             << name << " (";
         string sep = "";
         for (const auto& arg : input_values())
         {

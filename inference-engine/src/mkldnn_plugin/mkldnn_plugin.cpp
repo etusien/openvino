@@ -308,6 +308,13 @@ static void Transformation(CNNNetwork& clonedNetwork, const Config& conf) {
 
     manager.run_passes(nGraphFunc);
 
+    if (getenv("DUMP_NODES")) {
+        std::cout << "==============\n";
+        for (const auto& node : nGraphFunc->get_ordered_ops()) {
+           std::cout << *node << std::endl;
+        }
+    }
+
     using namespace ngraph::pass::low_precision;
     if (useLpt) {
         OV_ITT_SCOPE(FIRST_INFERENCE, MKLDNNPlugin::itt::domains::MKLDNN_LT, "LowPrecisionTransformations");
